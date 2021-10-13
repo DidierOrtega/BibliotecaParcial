@@ -1,0 +1,17 @@
+package co.uniquindio.prog2.biblioteca.model;
+
+
+ 
+public class Bibliotecario extends Persona {
+
+	// ATRIBUTOS CLASE
+	
+
+	public Bibliotecario(String nombre, String identificacion, String telefono, String direccion, String ocupacion,
+			int antiguedad, String tipoDocumento) {
+		super (nombre, identificacion, telefono, direccion, ocupacion,tipoDocumento,antiguedad);
+		
+		// TODO Auto-generated constructor stub
+	}
+
+}

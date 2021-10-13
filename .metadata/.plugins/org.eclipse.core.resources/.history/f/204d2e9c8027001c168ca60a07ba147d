@@ -1,0 +1,168 @@
+package co.uniquindio.prog2.biblioteca.model;
+
+/**
+ * Clase prestamo
+ * 
+ * @author Juan Andrade
+ *
+ */
+public class Prestamo {
+
+	// ATRIBUTOS CLASE
+	private String fechaPrestamo;
+	private String fechaEntrega;
+	private String codigo;
+	private String idEstudiante;
+	private String codigoBibliotecario;
+	private String codigoLibro;
+	private int cantidad;
+	private double costo;
+	private DetallePrestamo detalle;
+
+	/**
+	 * METODO CONSTRUCTOR
+	 * 
+	 * @param fechaPrestamo
+	 * @param fechaEntrega
+	 * @param codigo
+	 * @param idEstudiante
+	 * @param codigoBibliotecario
+	 * @param codigoLibro
+	 * @param cantidad
+	 * @param costo
+	 */
+	public Prestamo(String fechaPrestamo, String fechaEntrega, String codigo, String idEstudiante,
+			String codigoBibliotecario, String codigoLibro, int cantidad, double costo) {
+		super();
+		this.fechaPrestamo = fechaPrestamo;
+		this.fechaEntrega = fechaEntrega;
+		this.codigo = codigo;
+		this.idEstudiante = idEstudiante;
+		this.codigoBibliotecario = codigoBibliotecario;
+		this.codigoLibro = codigoLibro;
+		this.cantidad = cantidad;
+		this.costo = costo;
+		this.detalle=detalle;
+	}
+
+	/**
+	 * @return the fechaPrestamo
+	 */
+	public String getFechaPrestamo() {
+		return fechaPrestamo;
+	}
+
+	/**
+	 * @param fechaPrestamo the fechaPrestamo to set
+	 */
+	public void setFechaPrestamo(String fechaPrestamo) {
+		this.fechaPrestamo = fechaPrestamo;
+	}
+
+	/**
+	 * @return the fechaEntrega
+	 */
+	public String getFechaEntrega() {
+		return fechaEntrega;
+	}
+
+	/**
+	 * @param fechaEntrega the fechaEntrega to set
+	 */
+	public void setFechaEntrega(String fechaEntrega) {
+		this.fechaEntrega = fechaEntrega;
+	}
+
+	/**
+	 * @return the codigo
+	 */
+	public String getCodigo() {
+		return codigo;
+	}
+
+	/**
+	 * @param codigo the codigo to set
+	 */
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	/**
+	 * @return the idEstudiante
+	 */
+	public String getIdEstudiante() {
+		return idEstudiante;
+	}
+
+	/**
+	 * @param idEstudiante the idEstudiante to set
+	 */
+	public void setIdEstudiante(String idEstudiante) {
+		this.idEstudiante = idEstudiante;
+	}
+
+	/**
+	 * @return the codigoBibliotecario
+	 */
+	public String getCodigoBibliotecario() {
+		return codigoBibliotecario;
+	}
+
+	/**
+	 * @param codigoBibliotecario the codigoBibliotecario to set
+	 */
+	public void setCodigoBibliotecario(String codigoBibliotecario) {
+		this.codigoBibliotecario = codigoBibliotecario;
+	}
+
+	/**
+	 * @return the codigoLibro
+	 */
+	public String getCodigoLibro() {
+		return codigoLibro;
+	}
+
+	/**
+	 * @param codigoLibro the codigoLibro to set
+	 */
+	public void setCodigoLibro(String codigoLibro) {
+		this.codigoLibro = codigoLibro;
+	}
+
+	/**
+	 * @return the cantidad
+	 */
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	/**
+	 * @param cantidad the cantidad to set
+	 */
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	/**
+	 * @return the costo
+	 */
+	public double getCosto() {
+		return costo;
+	}
+
+	/**
+	 * @param costo the costo to set
+	 */
+	public void setCosto(double costo) {
+		this.costo = costo;
+	}
+
+	@Override
+	public String toString() {
+		return "Fecha del prestamo: " + fechaPrestamo + "\nFecha de entrega: " + fechaEntrega
+				+ "\nCodigo: " + codigo + "\nIdentificacion estudiante: " + idEstudiante
+				+ "\nCodigo bibliotecario: " + codigoBibliotecario + "\nCodigo libro: " + codigoLibro + "\nCantidad: "
+				+ cantidad + "\nCosto: " + costo;
+	}
+
+}

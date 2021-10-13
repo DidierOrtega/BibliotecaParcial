@@ -1,0 +1,16 @@
+package co.uniquindio.prog2.biblioteca.model;
+
+public enum IdentificacionDetalle {
+ PRESTAMO (0), IDENTIFICACION (1), PASAPORTE(2);
+	
+	private int documento;
+	
+	private DetalleDocumento(int numDetalleDocumento) {
+		this.documento = numDetalleDocumento;
+	}
+
+	public int getDetallDocumento() {
+		return documento;
+	}
+
+}

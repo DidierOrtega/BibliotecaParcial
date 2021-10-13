@@ -1,0 +1,731 @@
+package co.uniquindio.prog2.biblioteca.model;
+
+import java.time.LocalDate;
+
+
+public class Biblioteca {
+
+	// ------ LISTA DE VARIABLES -------
+	private String nombre;
+	private String direccion;
+
+	private Libro libro1;
+	private Libro libro2;
+
+	private Prestamo prestamo1;
+	private Prestamo prestamo2;
+
+	private Estudiante estudiante1;
+	private Estudiante estudiante2;
+
+	private Bibliotecario bibliotecario1;
+	private Bibliotecario bibliotecario2;
+	private DetallePrestamo detallePrestamo;
+
+	private final double COSTOPORDIA = 5000;
+
+	/**
+	 * Metodo constructor de la clase Biblioteca
+	 * 
+	 * @param nombre
+	 * @param direccion
+	 */
+	public Biblioteca(String nombre, String direccion) {
+		this.nombre = nombre;
+		this.direccion = direccion;
+	}
+
+	/**
+	 * Crear un bibliotecario
+	 * 
+	 * @param nombreEstudiante
+	 * @param identificacionEstudiante
+	 * @param direccionEstudiante
+	 * @param telefonoEstudiante
+	 * @return mensaje proceso
+	 */
+	public String crearBibliotecario(String nombre, String identificacion, String direccion, String telefono,
+			String ocupacion, int antiguedad) {
+
+		String mensaje = "No es posible crear mas bibliotecarios";
+		if (bibliotecario1 == null) {
+			bibliotecario1 = new Bibliotecario(nombre, identificacion, telefono, direccion, ocupacion, antiguedad);
+			mensaje = "Bibliotecario creado con exito";
+		}else if (bibliotecario2 == null) {
+			bibliotecario2 = new Bibliotecario(nombre, identificacion, telefono, direccion, ocupacion, antiguedad);
+			mensaje = "Bibliotecario creado con exito";
+		}
+		return mensaje;
+	}
+
+	/**
+	 * Crear un estudiante
+	 * 
+	 * @param nombreEstudiante
+	 * @param identificacionEstudiante
+	 * @param direccionEstudiante
+	 * @param telefonoEstudiante
+	 * @return mensaje proceso
+	 */
+	public String crearEstudiante(String nombreEstudiante, String identificacionEstudiante, String direccionEstudiante,
+			String telefonoEstudiante, String ocupacionEstudiante) {
+
+		String mensaje = "No es posible crear mas estudiantes";
+		if (estudiante1 == null) {
+			estudiante1 = new Estudiante(nombreEstudiante, identificacionEstudiante, telefonoEstudiante,
+					direccionEstudiante, ocupacionEstudiante);
+			mensaje = "Estudiante creado con exito";
+		} else if (estudiante2 == null) {
+			estudiante2 = new Estudiante(nombreEstudiante, identificacionEstudiante, telefonoEstudiante,
+					direccionEstudiante, ocupacionEstudiante);
+			mensaje = "Estudiante creado con exito";
+		}
+
+		return mensaje;
+	}
+
+	/**
+	 * Consultar un estudiante
+	 * 
+	 * @param identificacionEstudiante
+	 * @return estudiante encontrado
+	 */
+	public Estudiante consultarEstudiante(String identificacionEstudiante) {
+
+		Estudiante estudianteEncontrado = null;
+		if (estudiante1 != null) {
+			if (estudiante1.getIdentificacion().equals(identificacionEstudiante)) {
+				estudianteEncontrado = estudiante1;
+			}
+		}
+		if (estudianteEncontrado == null && estudiante2 != null) {
+			if (estudiante2.getIdentificacion().equals(identificacionEstudiante)) {
+				estudianteEncontrado = estudiante2;
+			}
+		}
+		return estudianteEncontrado;
+	}
+
+	/**
+	 * Eliminar estudiante
+	 * 
+	 * @param identificacionEstudiante
+	 * @return mensaje proceso
+	 */
+	public String eliminarEstudiante(String identificacionEstudiante) {
+
+		String mensaje = "Estudiante no eliminado";
+		Estudiante estudianteEncontrado = null;
+		estudianteEncontrado = consultarEstudiante(identificacionEstudiante);
+
+		if (estudianteEncontrado != null) {
+			if (estudiante1 == estudianteEncontrado) {
+				estudiante1 = null;
+				mensaje = "Estudiante eliminado";
+			} else {
+				if (estudiante2 == estudianteEncontrado) {
+					estudiante2 = null;
+					mensaje = "Estudiante eliminado";
+				}
+			}
+		}
+		return mensaje;
+	}
+
+	/**
+	 * Actualizar estudiante
+	 * 
+	 * @param identificacionEstudiante
+	 * @return mensaje proceso
+	 */
+	public String actualizarEstudiante(String identificacionEstudiante, String nombreEstudiante,
+			String direccionEstudiante, String telefonoEstudiante) {
+
+		String mensaje = "Estudiante no actualizado (no encontrado)";
+		Estudiante estudianteEncontrado = null;
+		estudianteEncontrado = consultarEstudiante(identificacionEstudiante);
+
+		if (estudianteEncontrado != null) {
+			if (estudiante1 == estudianteEncontrado) {
+				estudiante1.setDireccion(direccionEstudiante);
+				estudiante1.setIdentificacion(identificacionEstudiante);
+				estudiante1.setNombre(nombreEstudiante);
+				estudiante1.setTelefono(telefonoEstudiante);
+				mensaje = "Estudiante actualizado";
+			} else {
+				if (estudiante2 == estudianteEncontrado) {
+					estudiante2.setDireccion(direccionEstudiante);
+					estudiante2.setIdentificacion(identificacionEstudiante);
+					estudiante2.setNombre(nombreEstudiante);
+					estudiante2.setTelefono(telefonoEstudiante);
+					mensaje = "Estudiante actualizado";
+				}
+			}
+		}
+		return mensaje;
+	}
+
+	/**
+	 * Crear un libro
+	 * 
+	 * @param isbn
+	 * @param titulo
+	 * @param autor
+	 * @param numeroPaginas
+	 * @param editorial
+	 * @param estado
+	 * @param fechaPublicacion
+	 * @param codigo
+	 * @param cantidadDisponible
+	 * @return mensaje proceso
+	 */
+	public String crearLibro(String isbn, String titulo, String autor, int numeroPaginas, String editorial,
+			String estado, String fechaPublicacion, String codigo, int cantidadDisponible,double valorLibro) {
+
+		String mensaje = "No es posible crear mas estudiantes";
+
+		if (libro1 == null) {
+			libro1 = new Libro(isbn, titulo, autor, numeroPaginas, editorial, estado, fechaPublicacion, codigo,
+					cantidadDisponible,valorLibro);
+			mensaje = "Libro creado con exito";
+		} else {
+			if (libro2 == null) {
+				libro2 = new Libro(isbn, titulo, autor, numeroPaginas, editorial, estado, fechaPublicacion, codigo,
+						cantidadDisponible,valorLibro);
+				mensaje = "Libro creado con exito";
+			}
+		}
+
+		return mensaje;
+	}
+
+	/**
+	 * Consultar un libro por medio de su codigo
+	 * 
+	 * @param codigoLibro
+	 * @return libro encontrado
+	 */
+	public Libro consultarLibroPorCodigo(String codigoLibro) {
+
+		Libro libroEncontrado = null;
+		if (libro1 != null) {
+			if (libro1.getCodigo().equals(codigoLibro)) {
+				libroEncontrado = libro1;
+			}
+		}
+		if (libroEncontrado == null && libro2 != null) {
+			if (libro2.getCodigo().equals(codigoLibro)) {
+				libroEncontrado = libro2;
+			}
+		}
+		return libroEncontrado;
+	}
+
+	/**
+	 * Consultar un libro por medio de su titulo
+	 * 
+	 * @param codigoLibro
+	 * @return libro encontrado
+	 */
+	public Libro consultarLibroPorTitulo(String titulo) {
+
+		Libro libroEncontrado = null;
+		if (libro1 != null) {
+			if (libro1.getTitulo().equals(titulo)) {
+				libroEncontrado = libro1;
+			}
+		}
+		if (libroEncontrado == null && libro2 != null) {
+			if (libro2.getTitulo().equals(titulo)) {
+				libroEncontrado = libro2;
+			}
+		}
+		return libroEncontrado;
+	}
+
+	/**
+	 * Eliminar libro
+	 * 
+	 * @param codigoLibro
+	 * @return mensaje proceso
+	 */
+	public String eliminarLibro(String codigoLibro) {
+
+		String mensaje = "Estudiante no eliminado";
+		Libro libroEncontrado = null;
+		libroEncontrado = consultarLibroPorCodigo(codigoLibro);
+
+		if (libroEncontrado != null) {
+			if (libro1 == libroEncontrado) {
+				libro1 = null;
+				mensaje = "Libro eliminado";
+			} else {
+				if (libro2 == libroEncontrado) {
+					libro2 = null;
+					mensaje = "Libro eliminado";
+				}
+			}
+		}
+		return mensaje;
+	}
+
+	/**
+	 * Verifica si un libro no es nulo
+	 * 
+	 * @param opcion
+	 * @return true si existe, false caso contrario
+	 */
+	public boolean verificarExistenciaNoNulaLibro(int opcion) {
+		boolean retorno = false;
+
+		if ((opcion == 1 && libro1 != null) || (opcion == 2 && libro2 != null))
+			retorno = true;
+
+		return retorno;
+	}
+
+	/**
+	 * Reemplaza o sobreescribe el libro segun la opcion especificada
+	 * 
+	 * @param isbn
+	 * @param titulo
+	 * @param autor
+	 * @param numeroPaginas
+	 * @param editorial
+	 * @param estado
+	 * @param fechaPublicacion
+	 * @param codigo
+	 * @param cantidadDisponible
+	 * @param opcion
+	 * @return menseaje proceso
+	 */
+	public String reemplazarLibro(String isbn, String titulo, String autor, int numeroPaginas, String editorial,
+			String estado, String fechaPublicacion, String codigo, int cantidadDisponible, int opcion) {
+
+		String mensaje = "La opcion de libro ingresada no existe, por favor intente nuevamente";
+		switch (opcion) {
+		case 1: {
+			libro1.setAutor(autor);
+			libro1.setCantidadDisponible(cantidadDisponible);
+			libro1.setCodigo(codigo);
+			libro1.setEditorial(editorial);
+			libro1.setEstado(estado);
+			libro1.setFechaPublicacion(fechaPublicacion);
+			libro1.setIsbn(isbn);
+			libro1.setNumeroPaginas(numeroPaginas);
+			libro1.setTitulo(titulo);
+			mensaje = "El libro 1 fue reemplazado correctamente";
+		}
+		case 2: {
+			libro2.setAutor(autor);
+			libro2.setCantidadDisponible(cantidadDisponible);
+			libro2.setCodigo(codigo);
+			libro2.setEditorial(editorial);
+			libro2.setEstado(estado);
+			libro2.setFechaPublicacion(fechaPublicacion);
+			libro2.setIsbn(isbn);
+			libro2.setNumeroPaginas(numeroPaginas);
+			libro2.setTitulo(titulo);
+			mensaje = "El libro 2 fue reemplazado correctamente";
+		}
+		default:
+		}
+		return mensaje;
+	}
+
+	/**
+	 * Crea el prestamo con sus debidos atributos
+	 * 
+	 * @param fechaPrestamo
+	 * @param fechaEntrega
+	 * @param codigo
+	 * @param idEstudiante
+	 * @param codigoBibliotecario
+	 * @param codigoLibro
+	 * @param cantidad
+	 * @return mensaje proceso
+	 */
+	public String crearPrestamo(String fechaPrestamo, String fechaEntrega, String codigo, String idEstudiante,
+			String codigoBibliotecario, String codigoLibro, int cantidad) {
+
+		String mensaje = "No se pueden crear mas prestamos";
+		Libro libroPrestamo = consultarLibroPorCodigo(codigoLibro);
+		Estudiante estudiantePrestamo = consultarEstudiante(idEstudiante);
+
+		if (libroPrestamo != null && estudiantePrestamo != null) {
+			if (libroPrestamo.verificarDisponibilidadLibro()) {
+				if (asignarLibroPrestamo(libroPrestamo, cantidad)) {
+
+					long dias = calcularDiasEntreFechas(fechaEntrega, fechaPrestamo);
+					double costo = ((int) dias * COSTOPORDIA) * cantidad* libroPrestamo.getValorLibro();
+					DetallePrestamo detalle= ;
+
+					if (prestamo1 == null) {
+						prestamo1 = new Prestamo(fechaPrestamo, fechaEntrega, codigo, idEstudiante, codigoBibliotecario,
+								codigoLibro, cantidad, costo);
+						mensaje = "Prestamo creado con exito\n" + "El prestamo al estudiante "
+								+ estudiantePrestamo.getNombre() + "\ndel libro " + libroPrestamo.getTitulo()
+								+ "\nTiene un costo de: " + costo;
+
+					} else if (prestamo2 == null) {
+						prestamo2 = new Prestamo(fechaPrestamo, fechaEntrega, codigo, idEstudiante, codigoBibliotecario,
+								codigoLibro, cantidad, costo);
+						mensaje = "Prestamo creado con exito\n" + "El prestamo al estudiante "
+								+ estudiantePrestamo.getNombre() + "\ndel libro " + libroPrestamo.getTitulo()
+								+ "\nTiene un costo de: " + costo;
+					}
+				}
+				else
+					mensaje = "No se puede crear prestamo porque la demanda supera la oferta del libro";
+			}
+
+		} else {
+			mensaje = "No coincide los codigos ingresados, por favor verifique";
+		}
+		return mensaje;
+	}
+
+	public String  crearDetallePrestamo( 	String libroT, int cantidad, double precio) {
+		String mensaje = "No es posible crear mas bibliotecarios";
+		Libro consultado=consultarLibroPorTitulo(libroT);
+		if (detallePrestamo == null) {
+			detallePrestamo = new DetallePrestamo(codigo;cantidad,  consultado, precio);
+			mensaje = "Detalle del prestamo creado ";
+		}
+		return mensaje;
+	}
+	/**
+	 * Consulta prestamo a partir de codigo
+	 * 
+	 * @param codigo
+	 * @return prestamo encontrado
+	 */
+	public Prestamo consultarPrestamo(String codigo) {
+
+		Prestamo prestamo = null;
+		if (prestamo1 != null) {
+			if (prestamo1.getCodigo().equals(codigo)) {
+				prestamo = prestamo1;
+			}
+		} else if (prestamo == null && prestamo2 != null) {
+			if (prestamo2.getCodigo().equals(codigo)) {
+				prestamo = prestamo2;
+			}
+		}
+		return prestamo;
+	}
+
+	/**
+	 * Asigna el libro al prestamo realizando los cambios necesarios al libro
+	 * 
+	 * @param libro
+	 * @param cantidad
+	 * @return notificacion proceso realizado
+	 */
+	public boolean asignarLibroPrestamo(Libro libro, int cantidad) {
+
+		int cantidadDisponibleNueva = 0;
+		boolean respuesta = false;
+
+		if (libro1 != null && libro.verificarIgualdad(libro1)) {
+			if (libro1.getCantidadDisponible() >= cantidad) {
+				cantidadDisponibleNueva = libro1.getCantidadDisponible() - cantidad;
+				if (cantidadDisponibleNueva <= 0) {
+					libro1.setEstado("AGOTADO");
+				}
+				libro1.setCantidadDisponible(cantidadDisponibleNueva);
+				respuesta = true;
+			}
+		} else if (libro2 != null && libro.verificarIgualdad(libro2)) {
+			if (libro2.getCantidadDisponible() >= cantidad) {
+				cantidadDisponibleNueva = libro2.getCantidadDisponible() - cantidad;
+				if (cantidadDisponibleNueva <= 0) {
+					libro2.setEstado("AGOTADO");
+				}
+				libro2.setCantidadDisponible(cantidadDisponibleNueva);
+				respuesta = true;
+			}
+		}
+		return respuesta;
+	}
+
+	/**
+	 * Calcula los prestamos realizados por los empleados vigentes
+	 * 
+	 * @return mensaje con los datos
+	 */
+	public int calcularCantidadPrestamosEmpleado(String codigoEmpleado) {
+		int cantPrestamos = 0;
+		if (bibliotecario1.getIdentificacion().equals(codigoEmpleado)) {
+			if (prestamo1 != null && prestamo1.getCodigoBibliotecario().equals(bibliotecario.getIdentificacion())) {
+				cantPrestamos++;
+			}
+			if (prestamo2 != null && prestamo2.getCodigoBibliotecario().equals(bibliotecario.getIdentificacion())) {
+				cantPrestamos++;
+			}
+		}
+
+		return cantPrestamos;
+	}
+
+	/**
+	 * Verifica de los estudiantes quien tiene mayor numero de prestamos
+	 * 
+	 * @return estudiante encontrado
+	 */
+	public Estudiante calcularEstudianteConMayorPrestamos() {
+		int contador1 = 0;
+		int contador2 = 0;
+		Estudiante estudiante = null;
+
+		if (estudiante1 != null) {
+			if (prestamo1 != null && estudiante1.getIdentificacion().equals(prestamo1.getIdEstudiante())) {
+				contador1++;
+			}
+			if (prestamo2 != null && estudiante1.getIdentificacion().equals(prestamo2.getIdEstudiante())) {
+				contador1++;
+			}
+		}
+		if (estudiante2 != null) {
+
+			if (prestamo1 != null && estudiante2.getIdentificacion().equals(prestamo1.getIdEstudiante())) {
+				contador2++;
+			}
+			if (prestamo2 != null && estudiante2.getIdentificacion().equals(prestamo2.getIdEstudiante())) {
+				contador2++;
+			}
+		}
+
+		if (contador1 > contador2)
+			estudiante = estudiante1;
+		else
+			estudiante = estudiante2;
+
+		return estudiante;
+	}
+
+	/**
+	 * Calcula el dinero total recaudado
+	 * 
+	 * @return resultado dinero
+	 */
+	public double calcularDineroRecaudado() {
+		double dineroTotal = 0;
+
+		if (prestamo1 != null) {
+			dineroTotal += prestamo1.getCosto();
+		}
+		if (prestamo2 != null) {
+			dineroTotal += prestamo2.getCosto();
+		}
+
+		return dineroTotal;
+	}
+
+	/**
+	 * Calcular pago del empleado
+	 * 
+	 * @param codigoEmpleado
+	 * @return pago total
+	 */
+	public double calcularPagoEmpleado(String codigoEmpleado) {
+		double pago = 0;
+
+		if (bibliotecario.getIdentificacion().equals(codigoEmpleado)) {
+			if (prestamo1 != null && prestamo1.getCodigoBibliotecario().equals(bibliotecario.getIdentificacion())) {
+				pago += (prestamo1.getCosto() * (0.2))
+						+ ((prestamo1.getCosto() * (0.02)) * bibliotecario.getAntiguedad());
+			}
+			if (prestamo2 != null && prestamo2.getCodigoBibliotecario().equals(bibliotecario.getIdentificacion())) {
+				pago += (prestamo2.getCosto() * (0.2))
+						+ ((prestamo2.getCosto() * (0.02)) * bibliotecario.getAntiguedad());
+			}
+		}
+		return pago;
+	}
+
+	/**
+	 * Consulta por el titulo del libro en cuantos prestamos se encuentra
+	 * 
+	 * @param titulo
+	 * @return cantidad prestamos
+	 */
+	public int consultarLibroTituloEnPrestamos(String titulo) {
+		int cantidad = 0;
+		Libro libroEncontrado = consultarLibroPorTitulo(titulo);
+
+		if (prestamo1 != null && libroEncontrado.getCodigo().equals(prestamo1.getCodigoLibro())) {
+			cantidad++;
+		}
+		if (prestamo2 != null && libroEncontrado.getCodigo().equals(prestamo2.getCodigoLibro())) {
+			cantidad++;
+		}
+
+		return cantidad;
+	}
+
+	/**
+	 * Calcula los dias que se va a realizar el prestamo
+	 * 
+	 * @param fechaEntrega
+	 * @param fechaPrestamo
+	 * @return entero dias del prestamo
+	 */
+	public long calcularDiasEntreFechas(String fechaEntrega, String fechaPrestamo) {
+
+		// Posiciones [0]: dia, [1]: mes, [2]: anio
+		String[] fechaEntregaSplit = fechaEntrega.split("/");
+		String[] fechaPrestamoSplit = fechaPrestamo.split("/");
+
+		int fechaEntregaDia = Integer.parseInt(fechaEntregaSplit[0]);
+		int fechaEntregaMes = Integer.parseInt(fechaEntregaSplit[1]);
+		int fechaEntregaAnio = Integer.parseInt(fechaEntregaSplit[2]);
+
+		int fechaPrestamoDia = Integer.parseInt(fechaPrestamoSplit[0]);
+		int fechaPrestamoMes = Integer.parseInt(fechaPrestamoSplit[1]);
+		int fechaPrestamoAnio = Integer.parseInt(fechaPrestamoSplit[2]);
+
+		LocalDate inicio = LocalDate.of(fechaPrestamoAnio, fechaPrestamoMes, fechaPrestamoDia);
+		LocalDate fin = LocalDate.of(fechaEntregaAnio, fechaEntregaMes, fechaEntregaDia);
+
+		// Usando ChronoUnit, se calcula el numero de dias
+		long dias = java.time.temporal.ChronoUnit.DAYS.between(inicio, fin);
+
+		return dias;
+	}
+
+	@Override
+	public String toString() {
+		return "Biblioteca [Nombre =" + nombre + ", Direccion =" + direccion + ", Libro 1 =" + libro1.toString()
+				+ ", Libro 2 =" + libro2.toString() + ", Prestamo 1 =" + prestamo1 + ", Prestamo 2 =" + prestamo2
+				+ ", Estudiante 1 =" + estudiante1.toString() + ", Estudiante 2=" + estudiante2.toString()
+				+ ", Bibliotecario=" + bibliotecario.toString() + "]";
+	}
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @return the direccion
+	 */
+	public String getDireccion() {
+		return direccion;
+	}
+
+	/**
+	 * @param direccion the direccion to set
+	 */
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	/**
+	 * @return the libro1
+	 */
+	public Libro getLibro1() {
+		return libro1;
+	}
+
+	/**
+	 * @param libro1 the libro1 to set
+	 */
+	public void setLibro1(Libro libro1) {
+		this.libro1 = libro1;
+	}
+
+	/**
+	 * @return the libro2
+	 */
+	public Libro getLibro2() {
+		return libro2;
+	}
+
+	/**
+	 * @param libro2 the libro2 to set
+	 */
+	public void setLibro2(Libro libro2) {
+		this.libro2 = libro2;
+	}
+
+	/**
+	 * @return the prestamo1
+	 */
+	public Prestamo getPrestamo1() {
+		return prestamo1;
+	}
+
+	/**
+	 * @param prestamo1 the prestamo1 to set
+	 */
+	public void setPrestamo1(Prestamo prestamo1) {
+		this.prestamo1 = prestamo1;
+	}
+
+	/**
+	 * @return the prestamo2
+	 */
+	public Prestamo getPrestamo2() {
+		return prestamo2;
+	}
+
+	/**
+	 * @param prestamo2 the prestamo2 to set
+	 */
+	public void setPrestamo2(Prestamo prestamo2) {
+		this.prestamo2 = prestamo2;
+	}
+
+	/**
+	 * @return the estudiante1
+	 */
+	public Estudiante getEstudiante1() {
+		return estudiante1;
+	}
+
+	/**
+	 * @param estudiante1 the estudiante1 to set
+	 */
+	public void setEstudiante1(Estudiante estudiante1) {
+		this.estudiante1 = estudiante1;
+	}
+
+	/**
+	 * @return the estudiante2
+	 */
+	public Estudiante getEstudiante2() {
+		return estudiante2;
+	}
+
+	/**
+	 * @param estudiante2 the estudiante2 to set
+	 */
+	public void setEstudiante2(Estudiante estudiante2) {
+		this.estudiante2 = estudiante2;
+	}
+
+	/**
+	 * @return the bibliotecario
+	 */
+	public Bibliotecario getBibliotecario() {
+		return bibliotecario;
+	}
+
+	/**
+	 * @param bibliotecario the bibliotecario to set
+	 */
+	public void setBibliotecario(Bibliotecario bibliotecario) {
+		this.bibliotecario = bibliotecario;
+	}
+
+}
